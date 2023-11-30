@@ -1,0 +1,13 @@
+apiVersion: v2
+name: amq-streams
+description: A Helm chart for Kubernetes
+type: application
+version: 0.1.0
+
+dependencies:
+  - name: kafka-broker
+    version: 0.1.0
+    repository: file://kafka-broker
+  - name: kafdrop
+    version: 0.1.0
+    repository: file://kafdrop
