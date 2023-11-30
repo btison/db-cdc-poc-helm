@@ -1,0 +1,28 @@
+---
+kind: KafkaConnector
+apiVersion: kafka.strimzi.io/v1beta2
+metadata:
+  name: {{ include "debezium.name" . }}
+  labels:
+    {{- include "debezium.labels" . | nindent 4 }}
+    strimzi.io/cluster: "{{ include "debezium.kafka-connect-name" (dict "value" .Values.connector "namespace" .Release.Namespace) }}"
+  annotations:
+    {{- include "debezium.argocd-syncwave" . | nindent 4 }}
+spec:
+  class: io.debezium.connector.postgresql.PostgresConnector
+  tasksMax: 1
+  config:
+    connector.class: "io.debezium.connector.postgresql.PostgresConnector"
+    plugin.name: "pgoutput"
+    database.hostname: "{{ .Values.connector.database.hostname }}"
+    database.port: "{{ .Values.connector.database.port }}"
+    database.user: "{{ .Values.connector.database.user }}"
+    database.password: "{{ .Values.connector.database.password }}"
+    database.dbname: "{{ .Values.connector.database.dbname }}"
+    topic.prefix: "{{ .Values.connector.database.topicPrefix }}"
+    decimal.handling.mode: "{{ .Values.connector.decimalHandlingMode }}"
+    slot.name: debezium1
+    schema.include.list: "{{ .Values.connector.schema.includeList }}"
+    table.include.list: "{{ .Values.connector.table.includeList }}"
+    topic.creation.default.replication.factor: {{ .Values.connector.topic.replicationFactor }}
+    topic.creation.default.partitions: {{ .Values.connector.topic.partitions }}

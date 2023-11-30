@@ -1,0 +1,20 @@
+connector:
+  database:
+    hostname: ""
+    port: 5432
+    user: ""
+    password: ""
+    dbname: "pos"
+    topicPrefix: "pos.updates"
+  schema:
+    includeList: public
+  table:
+    includeList: public.inventory
+  topic:
+    replicationFactor: 3
+    partitions: 1
+  decimalHandlingMode: string
+
+argocd:
+  enabled: true
+  syncwave: "0"
