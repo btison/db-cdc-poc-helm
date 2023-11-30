@@ -11,3 +11,6 @@ dependencies:
   - name: kafdrop
     version: 0.1.0
     repository: file://kafdrop
+  - name: kafka-topics
+    version: 0.1.0
+    repository: file://kafka-topics

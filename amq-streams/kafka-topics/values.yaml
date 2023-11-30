@@ -1,0 +1,16 @@
+
+
+kafka:
+  cluster: kafka
+  replicationFactor: 2
+  topics:
+    - name: inventory.event
+      partitions: 1
+      retention: -1
+    - name: pos.updates.public.inventory
+      partitions: 1
+      retention: -1
+  namespace: 
+argocd:
+  enabled: true
+  syncwave: "0"
