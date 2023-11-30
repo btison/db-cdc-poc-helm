@@ -1,0 +1,43 @@
+version: 3.5.0
+replicas: 1
+topicPrefix: globex-cdc
+keyConverter: org.apache.kafka.connect.json.JsonConverter
+valueConverter: org.apache.kafka.connect.json.JsonConverter
+replicationFactor: 3
+authentication:
+  passwordKey: clientSecret
+resources:
+  requests:
+    cpu: 100m
+    memory: 250Mi
+  limits:
+    cpu: 500m
+    memory: 1Gi
+livenessProbe:
+  initialDelaySeconds: 45
+  timeoutSeconds: 5
+readinessProbe:
+  initialDelaySeconds: 15
+  timeoutSeconds: 5
+build:
+  output:
+    type: imageStream
+    image: kafka-connect-build:latest
+  plugins:
+    - name: debezium-postgres-connector
+      artifacts:
+        - type: tgz
+          url: https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/2.1.1.Final/debezium-connector-postgres-2.1.1.Final-plugin.tar.gz
+          sha512sum: 0fae703f65c2f472c6f3404a2da0334b942381fd578910deec546a2b69199d5ca293697d4fcf7f4cd112d9b84246515fbb39e6c641216123266b5858ac8e6f4a
+
+kafka:
+  namespace: ""
+  broker: ""
+  bootstrapServer: ""
+  securityProtocol: ""
+  saslMechanism: ""
+  clientId: ""
+
+argocd:
+  enabled: true
+  syncwave: "0"
