@@ -27,12 +27,12 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Database password
 */}}
 {{- define "db.admin.password" -}}
-{{- $namespace := $.namespace }}
+{{- $namespace := .Release.Namespace }}
 {{- $output := "" }}
-{{- if ($.value.database.password) }}
-{{- $output = $.value.database.password }}
+{{- if (.Values.connector.database.password) }}
+{{- $output = .Values.connector.database.password }}
 {{- else }}
-{{- $hostname := (split "." $.value.database.hostname) }}
+{{- $hostname := (split "." .Values.connector.database.hostname) }}
 {{- $secret := $hostname._0 }}
 {{- if ($hostname._1) }}
 {{- $namespace = $hostname._1 }}
@@ -50,10 +50,10 @@ Kafka Connect
 */}}
 {{- define "debezium.kafka-connect-name" -}}
 {{- $output := "" }}
-{{- if ($.value.kafkaConnect) }}
-{{- $output = $.value.kafkaConnect }}
+{{- if (.Values.connector.kafkaConnect) }}
+{{- $output = .Values.connector.kafkaConnect }}
 {{- else }}
-{{- $kc := (lookup "kafka.strimzi.io/v1beta2" "KafkaConnect" $.namespace "").items | first | default dict }}
+{{- $kc := (lookup "kafka.strimzi.io/v1beta2" "KafkaConnect" .Release.Namespace "").items | first | default dict }}
 {{- $mt := (get $kc "metadata") }}
 {{- $output = (get $mt "name") }}
 {{- end }}

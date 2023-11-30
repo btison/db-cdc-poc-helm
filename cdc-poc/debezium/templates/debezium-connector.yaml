@@ -5,7 +5,7 @@ metadata:
   name: {{ include "debezium.name" . }}
   labels:
     {{- include "debezium.labels" . | nindent 4 }}
-    strimzi.io/cluster: "{{ include "debezium.kafka-connect-name" (dict "value" .Values.connector "namespace" .Release.Namespace) }}"
+    strimzi.io/cluster: "{{ include "debezium.kafka-connect-name" . }}"
   annotations:
     {{- include "debezium.argocd-syncwave" . | nindent 4 }}
 spec:

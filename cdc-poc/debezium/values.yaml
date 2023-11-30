@@ -1,4 +1,5 @@
 connector:
+  kafkaConnect: kafka-connect
   database:
     hostname: ""
     port: 5432
@@ -17,4 +18,4 @@ connector:
 
 argocd:
   enabled: true
-  syncwave: "0"
+  syncwave: "1"
